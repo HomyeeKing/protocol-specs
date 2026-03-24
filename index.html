@@ -7,9 +7,26 @@
   <style>
     :root {
       --primary: #6366f1;
+      --primary-dark: #4f46e5;
       --dark: #0f172a;
       --gray: #64748b;
       --light: #f8fafc;
+      --border: #e2e8f0;
+      --surface: #ffffff;
+      --card-bg: #ffffff;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --primary: #818cf8;
+        --primary-dark: #6366f1;
+        --dark: #f8fafc;
+        --gray: #94a3b8;
+        --light: #1e293b;
+        --border: #334155;
+        --surface: #0f172a;
+        --card-bg: #1e293b;
+      }
     }
 
     * {
@@ -22,13 +39,17 @@
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       line-height: 1.6;
       color: var(--dark);
-      background: var(--light);
+      background: var(--surface);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     .container {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 40px 24px;
+      padding: 40px 24px 80px;
+      flex: 1;
     }
 
     header {
@@ -44,11 +65,24 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      opacity: 0;
+      animation: fadeInDown 0.8s ease-out both;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      h1 {
+        background: linear-gradient(135deg, #818cf8 0%, #38bdf8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
     }
 
     .subtitle {
       font-size: 18px;
       color: var(--gray);
+      opacity: 0;
+      animation: fadeIn 0.8s ease-out 0.2s both;
     }
 
     .protocol-grid {
@@ -59,17 +93,102 @@
     }
 
     .protocol-card {
-      background: white;
+      position: relative;
+      background: var(--card-bg);
       border-radius: 16px;
       padding: 32px;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-      transition: transform 0.2s, box-shadow 0.2s;
-      border: 1px solid #e2e8f0;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      z-index: 1;
+      opacity: 0;
+      animation: slideUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    }
+
+    .protocol-card:nth-child(1) { animation-delay: 0.1s; }
+    .protocol-card:nth-child(2) { animation-delay: 0.2s; }
+    .protocol-card:nth-child(3) { animation-delay: 0.3s; }
+
+    .protocol-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(99, 102, 241, 0.12) 0%,
+        transparent 50%
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .protocol-card::before {
+        background: radial-gradient(
+          circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+          rgba(129, 140, 248, 0.15) 0%,
+          transparent 50%
+        );
+      }
+    }
+
+    .protocol-card:hover::before {
+      opacity: 1;
+    }
+
+    .protocol-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+      padding: 2px;
+      background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(99, 102, 241, 0.5) 0%,
+        transparent 40%
+      );
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .protocol-card::after {
+        background: radial-gradient(
+          circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+          rgba(129, 140, 248, 0.4) 0%,
+          transparent 40%
+        );
+      }
+    }
+
+    .protocol-card:hover::after {
+      opacity: 1;
     }
 
     .protocol-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+      transform: translateY(-6px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.15);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .protocol-card:hover {
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+      }
     }
 
     .protocol-icon {
@@ -84,6 +203,12 @@
       font-size: 24px;
       color: white;
       font-weight: 700;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .protocol-icon {
+        background: linear-gradient(135deg, #818cf8 0%, #38bdf8 100%);
+      }
     }
 
     .protocol-card h2 {
@@ -104,61 +229,80 @@
       text-decoration: none;
       border-radius: 8px;
       font-weight: 600;
-      transition: background 0.2s;
+      transition: background 0.2s, transform 0.2s;
     }
 
     .protocol-card a:hover {
-      background: #4f46e5;
-    }
-
-    .examples-section {
-      background: white;
-      border-radius: 16px;
-      padding: 32px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    }
-
-    .examples-section h2 {
-      font-size: 28px;
-      margin-bottom: 24px;
-    }
-
-    .example-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 16px;
-    }
-
-    .example-item {
-      background: var(--light);
-      padding: 20px;
-      border-radius: 12px;
-      border: 1px solid #e2e8f0;
-    }
-
-    .example-item code {
-      font-size: 14px;
-      color: var(--primary);
-      background: #e0e7ff;
-      padding: 4px 8px;
-      border-radius: 4px;
+      background: var(--primary-dark);
+      transform: translateX(4px);
     }
 
     footer {
       text-align: center;
-      margin-top: 60px;
-      padding-top: 40px;
-      border-top: 1px solid #e2e8f0;
+      padding: 24px;
+      border-top: 1px solid var(--border);
       color: var(--gray);
+      background: var(--surface);
     }
 
     footer a {
       color: var(--primary);
       text-decoration: none;
+      transition: opacity 0.2s;
     }
 
     footer a:hover {
-      text-decoration: underline;
+      opacity: 0.8;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes blurIn {
+      from {
+        filter: blur(10px);
+        opacity: 0;
+      }
+      to {
+        filter: blur(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes letterFall {
+      from {
+        transform: translateY(-100%);
+        opacity: 0.8;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
   </style>
 </head>
@@ -191,15 +335,47 @@
         <a href="viewer.html?spec=acp">View Spec →</a>
       </div>
     </div>
-
-
-
-    <footer>
-      <p>Maintained by <a href="https://github.com/HomyeeKing" target="_blank">HomyeeKing</a></p>
-      <p style="margin-top: 8px;">
-        <a href="https://github.com/HomyeeKing/protocol-specs" target="_blank">View on GitHub →</a>
-      </p>
-    </footer>
   </div>
+
+  <footer>
+    <p>Maintained by <a href="https://github.com/HomyeeKing" target="_blank">HomyeeKing</a></p>
+    <p style="margin-top: 8px;">
+      <a href="https://github.com/HomyeeKing/protocol-specs" target="_blank">View on GitHub →</a>
+    </p>
+  </footer>
+
+  <script>
+    // Flashlight effect on cards
+    document.querySelectorAll('.protocol-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mouse-x', `${x}%`);
+        card.style.setProperty('--mouse-y', `${y}%`);
+      });
+    });
+
+    // Animate text on load
+    document.addEventListener('DOMContentLoaded', () => {
+      const headings = document.querySelectorAll('h1, h2');
+      headings.forEach(heading => {
+        const text = heading.textContent;
+        heading.textContent = '';
+        heading.style.display = 'inline-block';
+        
+        text.split('').forEach((char, i) => {
+          const span = document.createElement('span');
+          span.textContent = char;
+          span.style.cssText = `
+            display: inline-block;
+            opacity: 0;
+            animation: letterFall 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${i * 0.03}s both;
+          `;
+          heading.appendChild(span);
+        });
+      });
+    });
+  </script>
 </body>
 </html>
