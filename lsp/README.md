@@ -617,5 +617,7 @@ enum LSPErrorCodes {
 
 ## References
 
-- [LSP Specification](https://microsoft.github.io/language-server-protocol/)
-- [LSP GitHub](https://github.com/microsoft/language-server-protocol)
+- 🌐 [Official Specification](https://microsoft.github.io/language-server-protocol/)
+- 💻 [LSP GitHub](https://github.com/microsoft/language-server-protocol)
+- 📖 [LSP Documentation](https://code.visualstudio.com/api/language-extensions/language-server-extension-guide)
+- 🧪 [LSP Inspector](https://github.com/usernamehw/vscode-lsp-inspector)

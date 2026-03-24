@@ -308,5 +308,7 @@ enum MCPErrorCodes {
 
 ## References
 
-- [MCP Specification](https://modelcontextprotocol.io/)
-- [MCP GitHub](https://github.com/modelcontextprotocol)
+- 🌐 [Official Website](https://modelcontextprotocol.io/)
+- 📚 [MCP Specification](https://spec.modelcontextprotocol.io/)
+- 💻 [MCP GitHub](https://github.com/modelcontextprotocol)
+- 📖 [MCP Documentation](https://modelcontextprotocol.io/docs)
