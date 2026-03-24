@@ -1,0 +1,294 @@
+{
+  "_comment": "LSP Protocol - Example Messages",
+  "_description": "Real-world examples of LSP protocol messages",
+
+  "examples": {
+    "initialize": {
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "method": "initialize",
+        "params": {
+          "processId": 12345,
+          "clientInfo": {
+            "name": "VSCode",
+            "version": "1.85.0"
+          },
+          "rootUri": "file:///workspace/my-project",
+          "capabilities": {
+            "textDocument": {
+              "synchronization": {
+                "dynamicRegistration": true,
+                "willSave": true,
+                "didSave": true,
+                "willSaveWaitUntil": true
+              },
+              "completion": {
+                "dynamicRegistration": true,
+                "completionItem": {
+                  "snippetSupport": true,
+                  "documentationFormat": ["markdown", "plaintext"]
+                }
+              },
+              "hover": {
+                "dynamicRegistration": true,
+                "contentFormat": ["markdown", "plaintext"]
+              },
+              "definition": {
+                "dynamicRegistration": true,
+                "linkSupport": true
+              },
+              "publishDiagnostics": {
+                "relatedInformation": true,
+                "tagSupport": {
+                  "valueSet": [1, 2]
+                }
+              }
+            },
+            "workspace": {
+              "workspaceFolders": true,
+              "applyEdit": true
+            }
+          },
+          "workspaceFolders": [
+            {
+              "uri": "file:///workspace/my-project",
+              "name": "my-project"
+            }
+          ]
+        }
+      },
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 1,
+        "result": {
+          "capabilities": {
+            "textDocumentSync": {
+              "openClose": true,
+              "change": 2,
+              "willSave": true,
+              "willSaveWaitUntil": true,
+              "save": { "includeText": true }
+            },
+            "completionProvider": {
+              "resolveProvider": true,
+              "triggerCharacters": [".", "(", "\""]
+            },
+            "hoverProvider": true,
+            "definitionProvider": true,
+            "referencesProvider": true,
+            "documentSymbolProvider": true,
+            "diagnosticProvider": {
+              "identifier": "typescript",
+              "interFileDependencies": true,
+              "workspaceDiagnostics": false
+            }
+          },
+          "serverInfo": {
+            "name": "typescript-language-server",
+            "version": "3.3.1"
+          }
+        }
+      }
+    },
+
+    "did_open": {
+      "method": "textDocument/didOpen",
+      "params": {
+        "textDocument": {
+          "uri": "file:///workspace/my-project/src/index.ts",
+          "languageId": "typescript",
+          "version": 1,
+          "text": "function greet(name: string): string {\n  return `Hello, ${name}!`;\n}\n\ngreet('World');"
+        }
+      }
+    },
+
+    "did_change": {
+      "method": "textDocument/didChange",
+      "params": {
+        "textDocument": {
+          "uri": "file:///workspace/my-project/src/index.ts",
+          "version": 2
+        },
+        "contentChanges": [
+          {
+            "range": {
+              "start": { "line": 3, "character": 7 },
+              "end": { "line": 3, "character": 14 }
+            },
+            "text": "Universe"
+          }
+        ]
+      }
+    },
+
+    "completion": {
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 10,
+        "method": "textDocument/completion",
+        "params": {
+          "textDocument": {
+            "uri": "file:///workspace/my-project/src/index.ts"
+          },
+          "position": { "line": 3, "character": 10 },
+          "context": {
+            "triggerKind": 2,
+            "triggerCharacter": "."
+          }
+        }
+      },
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 10,
+        "result": {
+          "isIncomplete": false,
+          "items": [
+            {
+              "label": "toString",
+              "kind": 2,
+              "detail": "(): string",
+              "documentation": {
+                "kind": "markdown",
+                "value": "Returns a string representation of the object."
+              },
+              "sortText": "0",
+              "textEdit": {
+                "range": {
+                  "start": { "line": 3, "character": 7 },
+                  "end": { "line": 3, "character": 10 }
+                },
+                "newText": "toString"
+              }
+            },
+            {
+              "label": "length",
+              "kind": 7,
+              "detail": "number",
+              "documentation": "Returns the length of the string.",
+              "sortText": "0"
+            }
+          ]
+        }
+      }
+    },
+
+    "hover": {
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 11,
+        "method": "textDocument/hover",
+        "params": {
+          "textDocument": {
+            "uri": "file:///workspace/my-project/src/index.ts"
+          },
+          "position": { "line": 0, "character": 10 }
+        }
+      },
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 11,
+        "result": {
+          "contents": {
+            "kind": "markdown",
+            "value": "```typescript\nfunction greet(name: string): string\n```\n\nGreets a person by name.\n\n**Parameters:**\n- `name` - The name to greet"
+          },
+          "range": {
+            "start": { "line": 0, "character": 9 },
+            "end": { "line": 0, "character": 14 }
+          }
+        }
+      }
+    },
+
+    "definition": {
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 12,
+        "method": "textDocument/definition",
+        "params": {
+          "textDocument": {
+            "uri": "file:///workspace/my-project/src/index.ts"
+          },
+          "position": { "line": 3, "character": 0 }
+        }
+      },
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 12,
+        "result": [
+          {
+            "uri": "file:///workspace/my-project/src/index.ts",
+            "range": {
+              "start": { "line": 0, "character": 0 },
+              "end": { "line": 2, "character": 1 }
+            }
+          }
+        ]
+      }
+    },
+
+    "publish_diagnostics": {
+      "method": "textDocument/publishDiagnostics",
+      "params": {
+        "uri": "file:///workspace/my-project/src/index.ts",
+        "version": 2,
+        "diagnostics": [
+          {
+            "range": {
+              "start": { "line": 0, "character": 0 },
+              "end": { "line": 0, "character": 8 }
+            },
+            "severity": 4,
+            "source": "typescript",
+            "message": "Function 'greet' is declared but never used.",
+            "code": 6133,
+            "tags": [1]
+          }
+        ]
+      }
+    },
+
+    "document_symbol": {
+      "request": {
+        "jsonrpc": "2.0",
+        "id": 13,
+        "method": "textDocument/documentSymbol",
+        "params": {
+          "textDocument": {
+            "uri": "file:///workspace/my-project/src/index.ts"
+          }
+        }
+      },
+      "response": {
+        "jsonrpc": "2.0",
+        "id": 13,
+        "result": [
+          {
+            "name": "greet",
+            "kind": 12,
+            "range": {
+              "start": { "line": 0, "character": 0 },
+              "end": { "line": 2, "character": 1 }
+            },
+            "selectionRange": {
+              "start": { "line": 0, "character": 9 },
+              "end": { "line": 0, "character": 14 }
+            }
+          }
+        ]
+      }
+    },
+
+    "error_response": {
+      "jsonrpc": "2.0",
+      "id": 99,
+      "error": {
+        "code": -32601,
+        "message": "Method not found",
+        "data": "textDocument/invalidMethod"
+      }
+    }
+  }
+}
