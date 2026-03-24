@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Protocol Specs</title>
+  <style>
+    :root {
+      --primary: #6366f1;
+      --dark: #0f172a;
+      --gray: #64748b;
+      --light: #f8fafc;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: var(--dark);
+      background: var(--light);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+
+    h1 {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, #6366f1 0%, #0ea5e9 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: var(--gray);
+    }
+
+    .protocol-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 60px;
+    }
+
+    .protocol-card {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+      border: 1px solid #e2e8f0;
+    }
+
+    .protocol-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    .protocol-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6366f1 0%, #0ea5e9 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+      color: white;
+      font-weight: 700;
+    }
+
+    .protocol-card h2 {
+      font-size: 24px;
+      margin-bottom: 12px;
+    }
+
+    .protocol-card p {
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+
+    .protocol-card a {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .protocol-card a:hover {
+      background: #4f46e5;
+    }
+
+    .examples-section {
+      background: white;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .examples-section h2 {
+      font-size: 28px;
+      margin-bottom: 24px;
+    }
+
+    .example-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+
+    .example-item {
+      background: var(--light);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #e2e8f0;
+    }
+
+    .example-item code {
+      font-size: 14px;
+      color: var(--primary);
+      background: #e0e7ff;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 60px;
+      padding-top: 40px;
+      border-top: 1px solid #e2e8f0;
+      color: var(--gray);
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Protocol Specs</h1>
+      <p class="subtitle">Data structure specifications for communication protocols</p>
+    </header>
+
+    <div class="protocol-grid">
+      <div class="protocol-card">
+        <div class="protocol-icon">M</div>
+        <h2>MCP</h2>
+        <p>Model Context Protocol - Communication between AI models and external tools/resources</p>
+        <a href="mcp/README.md">View Spec →</a>
+      </div>
+
+      <div class="protocol-card">
+        <div class="protocol-icon">L</div>
+        <h2>LSP</h2>
+        <p>Language Server Protocol - Communication between code editors and language servers</p>
+        <a href="lsp/README.md">View Spec →</a>
+      </div>
+
+      <div class="protocol-card">
+        <div class="protocol-icon">A</div>
+        <h2>ACP</h2>
+        <p>Agent Communication Protocol - Communication between AI agents and humans</p>
+        <a href="acp/README.md">View Spec →</a>
+      </div>
+    </div>
+
+    <div class="examples-section">
+      <h2>📋 Example Messages</h2>
+      <div class="example-list">
+        <div class="example-item">
+          <code>mcp-example.json</code>
+          <p style="margin-top: 8px; color: var(--gray); font-size: 14px;">MCP protocol message examples</p>
+        </div>
+        <div class="example-item">
+          <code>lsp-example.json</code>
+          <p style="margin-top: 8px; color: var(--gray); font-size: 14px;">LSP protocol message examples</p>
+        </div>
+        <div class="example-item">
+          <code>acp-example.json</code>
+          <p style="margin-top: 8px; color: var(--gray); font-size: 14px;">ACP protocol message examples</p>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Maintained by <a href="https://github.com/HomyeeKing" target="_blank">HomyeeKing</a></p>
+      <p style="margin-top: 8px;">
+        <a href="https://github.com/HomyeeKing/protocol-specs" target="_blank">View on GitHub →</a>
+      </p>
+    </footer>
+  </div>
+</body>
+</html>
