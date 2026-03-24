@@ -282,28 +282,6 @@
         transform: translateY(0);
       }
     }
-
-    @keyframes blurIn {
-      from {
-        filter: blur(10px);
-        opacity: 0;
-      }
-      to {
-        filter: blur(0);
-        opacity: 1;
-      }
-    }
-
-    @keyframes letterFall {
-      from {
-        transform: translateY(-100%);
-        opacity: 0.8;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
   </style>
 </head>
 <body>
@@ -353,27 +331,6 @@
         const y = ((e.clientY - rect.top) / rect.height) * 100;
         card.style.setProperty('--mouse-x', `${x}%`);
         card.style.setProperty('--mouse-y', `${y}%`);
-      });
-    });
-
-    // Animate text on load
-    document.addEventListener('DOMContentLoaded', () => {
-      const headings = document.querySelectorAll('h1, h2');
-      headings.forEach(heading => {
-        const text = heading.textContent;
-        heading.textContent = '';
-        heading.style.display = 'inline-block';
-        
-        text.split('').forEach((char, i) => {
-          const span = document.createElement('span');
-          span.textContent = char;
-          span.style.cssText = `
-            display: inline-block;
-            opacity: 0;
-            animation: letterFall 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${i * 0.03}s both;
-          `;
-          heading.appendChild(span);
-        });
       });
     });
   </script>
