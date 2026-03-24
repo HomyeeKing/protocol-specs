@@ -554,7 +554,6 @@ interface EncryptionInfo {
 
 ## References
 
-- 🌐 [FIPA ACL Specification](https://www.fipa.org/specs/fipa00061/)
-- 📚 [KQML Paper](https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=10.1.1.26.9527)
-- 💻 [Agent Communication Languages Survey](https://www.semanticscholar.org/paper/Agent-Communication-Languages-Survey-Cohen-Levesque)
-- 📖 [Multi-Agent Systems](https://www.cambridge.org/core/books/introduction-to-multiagent-systems/9E0C5E6E6E6E6E6E6E6E6E6E6E6E6E6E)
+- 🌐 [Official Website](https://agentcommunicationprotocol.dev/)
+- 📚 [ACP Documentation](https://agentcommunicationprotocol.dev/introduction/welcome)
+- 💻 [ACP GitHub](https://github.com/agentcommunicationprotocol)
